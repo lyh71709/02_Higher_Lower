@@ -14,10 +14,18 @@ rounds_played = 0
 while rounds_played < rounds:
     guess = ""
     guesses_left = guesses_allowed
+    already_guessed = []
 
     while guess != secret and guesses_left >= 1:
         guess = int(input("Guess: "))
+
+        if guess in already_guessed:
+            print("You already guessed that number! Please enter a different number")
+            print("You still have {} guesses left".format(guesses_left))
+            continue
+
         guesses_left -= 1
+        already_guessed.append(guess)
 
         if guesses_left < 1:
             if guess != secret:
@@ -48,6 +56,7 @@ while rounds_played < rounds:
             else:
                 print()
                 print("Well done! You guessed the secret number")
+                num_won += 1
                 if guesses_left == 1:
                     print("You had {} guess remaining".format(guesses_left))
                 else:
