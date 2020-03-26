@@ -50,16 +50,28 @@ def hl_statement(statement, char):
     print(char*len(statement))
     print()
 
+welcome = hl_statement(" Welcome to the Higher Lower Game! ", "=")
+print("The rules of this game are simple")
+print()
+print("The computer will select a random number between the boundaries of your choosing after this, \n"
+      "and your goal is to attempt to guess the random number the computer chooses. The game will tell\n"
+      " you if your guess was lower or higher than the selected number. You will lose when you take too \n"
+      "many guesses and the game will also tell you how many guesses you have until you lose so guess wisely.")
+print()
+print("Good Luck and have fun! o(*^▽^*)┛")
+print()
+
 # Begin whole game loop here
 keep_going = ""
 while keep_going == "":
 
     # Get user input for boundaries
+    print("Game has started")
     low = intcheck("What is your low boundary? ")
     high = intcheck("What is your high boundary? ", low + 1)
 
     # Ask user for how many rounds
-    rounds = intcheck("How many rounds? ", 1)
+    rounds = intcheck("How many rounds do you want to play for? ", 1)
     game_stats = []
 
     # Maximum guesses calculator
@@ -76,6 +88,11 @@ while keep_going == "":
     # Begin game
     while rounds_played < rounds:
 
+
+        # Due to the usability test, Give users option to quit before they finish all rounds
+        if rounds_played >= 1:
+            keep_going = input("Press <enter> if you wish to continue your game, if you don't press any key then <enter> to quit")
+
         # Get randomly generated secret number
         secret = random.randint(low, high)
 
@@ -84,9 +101,7 @@ while keep_going == "":
         already_guessed = []
 
         # User message letting them know what round it is
-        print()
-        start_round = hl_statement("                                 🔔    Round {} of {}    🔔".format(rounds_played + 1, rounds), "〰")
-        print()
+        start_round = hl_statement("🔔    Round {} of {}    🔔  ".format(rounds_played + 1, rounds), "-")
 
         # Comparisons
         while guess != secret and guesses_left >= 1:
@@ -94,7 +109,7 @@ while keep_going == "":
 
             if guess in already_guessed:
                 duplicate = hl_statement("(╯°□°）╯︵ ┻━┻  You already guessed that number  ", "!")
-                print("Please enter a different number, You still have {} guesses left".format(guesses_left))
+                print("Please enter a different number, you still have {} guesses left".format(guesses_left))
                 continue
 
             already_guessed.append(guess)
@@ -103,22 +118,19 @@ while keep_going == "":
             # Lose/Final guess Situation
             if guesses_left < 1:
                 if guess != secret:
-                    print()
-                    lose = hl_statement("                (╬▔皿▔)╯   Sorry You Lost", "💢")
+                    lose = hl_statement("(╬▔皿▔)╯   Sorry You Lost    ", "-")
                     print("The secret number was {}".format(secret))
                     guesses_left -= 1
                     break
                 else:
-                    print()
-                    win = hl_statement("(☞ﾟヮﾟ)☞  Well done! You guessed the secret number  ☜(ﾟヮﾟ☜)    ", "-")
+                    win = hl_statement("(☞ﾟヮﾟ)☞  Well Done! You guessed the secret number  ☜(ﾟヮﾟ☜)    ", "-")
                     print("You got it on the final guess")
                     num_won += 1
                     break
 
             # First Try situation
             elif guess == secret and guesses_left == (guesses_allowed - 1):
-                print()
-                first_try = hl_statement("                                  ✨   Sugoi! You got it first try   ✨", "✳")
+                first_try = hl_statement("✨   Sugoi! You got it first try   ✨  ", "-")
                 num_won += 1
 
             # Higher Lower guess comparison
@@ -133,8 +145,7 @@ while keep_going == "":
 
                 # Win situation
                 else:
-                    print()
-                    win = hl_statement("(☞ﾟヮﾟ)☞  Well done! You guessed the secret number  ☜(ﾟヮﾟ☜)    ", "-")
+                    win = hl_statement("(☞ﾟヮﾟ)☞  Well Done! You guessed the secret number  ☜(ﾟヮﾟ☜)    ", "-")
                     num_won += 1
                     if guesses_left == 1:
                         print("You had {} guess remaining".format(guesses_left))
@@ -176,7 +187,7 @@ while keep_going == "":
     print("Average: {:.2f}".format(average))
 
     # Farewell and ask user whether they want to loop the game or end it
-    print("Thanks for playing")
     print()
-    keep_going = input("Press <enter> to play again or any key to quit: ")
+    print("Thanks for playing ╰(*°▽°*)╯")
+    keep_going = input("Press <enter> to play again or any key and then <enter> to quit: ")
     print()
