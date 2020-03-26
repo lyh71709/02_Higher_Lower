@@ -17,9 +17,17 @@ while keep_going == "":
     while rounds_played < rounds:
         guess = ""
         guesses_left = guesses_allowed
+        already_guessed = []
 
         while guess != secret and guesses_left >= 1:
             guess = int(input("Guess: "))
+
+            if guess in already_guessed:
+                print("You already guessed that number! Please enter a different number")
+                print("You still have {} guesses left".format(guesses_left))
+                continue
+
+            already_guessed.append(guess)
             guesses_left -= 1
 
             if guesses_left < 1:
@@ -87,7 +95,6 @@ while keep_going == "":
     print("Best: {}".format(best))
     print("Worst: {}".format(worst))
     print("Average: {:.2f}".format(average))
-
 
     print("Thanks for playing")
     print()
